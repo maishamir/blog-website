@@ -1,8 +1,25 @@
 <%- include("./partials/header.ejs") %>
-    <h1>Blog Project</h1>
-    <h2>Capstone Project | Using Express and Node</h2>
-    <hr>
+<h1>Blog Project</h1>
+<h2>Capstone Project | Using Express and Node</h2>
+<hr />
 
-    <a href="/create-new">Create a post</a>
+<a href="/create-new">Create a post</a>
 
-<%- include("./partials/footer.ejs") %>
+<!-- if blog posts exist, then display them -->
+<% if (locals.blogPosts && Object.keys(locals.blogPosts).length > 0) {%>
+    <ul>
+    <% for (var postId in blogPosts) {%>
+        <li>
+            <h4><%= blogPosts[postId].title %></h4>
+            <p><%= blogPosts[postId].content %></p>
+        </li>
+    <%}%>
+    </ul>
+<% } %> <%- include("./partials/footer.ejs") %>
+
+
+<!-- structure of posts -->
+<!-- styled properly of course -->
+<!-- TITLE -->
+<!-- date created SMALL -->
+<!-- content -->

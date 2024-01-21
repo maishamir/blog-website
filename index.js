@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import { v4 as uuidv4 } from "uuid";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const app = express();
@@ -32,8 +33,24 @@ app.get("/create-new", (req, res) => {
 //what we see when we create a post and hit submit
 //homepage
 app.post("/", (req, res) => {
-    res.render("home.ejs")
+
+    //get the title and the post content 
+    let postTitle = req.body.postTitle;
+    let postContent = req.body.postContent;
+    let postID = uuidv4();
+
+    // console.log(`Title: ${postTitle}, Content: ${postContent}, PostID: ${postID}`)
+    //store it in an object and display it on the homepage
+
+    posts[postID] = { title: postTitle, content: postContent }
+    res.render("home.ejs", { blogPosts: posts });
+    console.log(posts)
+
+    //there may be duplicates of the title, so create a unique id and use it as the key to store the postTitle and postContent
+
 })
+
+
 
 
 //todo: handle post deletion functionality
