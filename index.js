@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}))
 const port = 3000;
 
-var posts =  {}
+var posts = {}
 
 //what we will see when we are at the home page
 //todo: create the homepage with a creation button and a place to show all the articles
@@ -39,34 +39,35 @@ app.post("/", (req, res) => {
     let postContent = req.body.postContent;
     let postID = uuidv4();
 
-    // console.log(`Title: ${postTitle}, Content: ${postContent}, PostID: ${postID}`)
     //store it in an object and display it on the homepage
 
     posts[postID] = { title: postTitle, content: postContent }
     res.render("home.ejs", { blogPosts: posts });
-    console.log(posts)
+    // console.log(posts)
 
-    //there may be duplicates of the title, so create a unique id and use it as the key to store the postTitle and postContent
 
 })
 
+app.get('/posts/:title', (req, res) => {
+    var postTitle = req.params.title;
+    console.log(postTitle);
 
+    postTitle = (postTitle.replaceAll('-', " "));
+    console.log(postTitle)
 
+    for (const postID in posts) {
+        if ((posts[postID].title).toLowerCase() == postTitle.toLowerCase()) {
+            res.render("post.ejs", { title: posts[postID].title, content: posts[postID].content })
+        }
+    }
+})
 
 //todo: handle post deletion functionality
-
 
 //since we might truncate long post texts to a certain number of characters, 
 //this might be the whole post shown in a new tab
 //route may be "/{post title}"
 //GET REQUEST
-
-
-
-
-
-
-
 
 app.listen(port, (req, res) => { 
     console.log(`Listening on port ${port}:`)

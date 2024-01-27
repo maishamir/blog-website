@@ -11,10 +11,10 @@
     <% for (var postId in blogPosts) {%>
         <li>
             <h4><%= blogPosts[postId].title %></h4>
-            <p><%= blogPosts[postId].content %></p>
+            <p><%= blogPosts[postId].content.substr(0,100) + "..." %></p>
 
             <!-- adding buttons to "see more" and to delete each post if needed -->
-            <button>See more</button>
+            <a href="/posts/<%= blogPosts[postId].title%>">Read more</a>
             <button>Delete</button>
         </li>
     <%}%>
