@@ -1,0 +1,11 @@
+<%- include("./partials/header.ejs") %>
+
+<% const urlTitle = title.toLowerCase().replace(" ", "-").toLowerCase() %>
+
+<form action="/posts/<%=urlTitle%>" method="POST">
+    <input type="text" name="postTitle" id="postTitle" value="<%=title%>">
+    <textarea name="postContent" id="postContent" cols="30" rows="10"><%=content%></textarea>
+    <button type="submit">Save edits</button>
+</form>
+
+<%- include("./partials/footer.ejs") %>

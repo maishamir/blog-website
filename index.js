@@ -22,6 +22,45 @@ app.get("/", (req, res) => {
 //route may be "{name of the post}/edit"
 //it might show the form with the current fields
 
+app.get("/posts/:title/edit", (req, res) => {
+    const postTitle = req.params.title;
+    //returns the kebab-casing version of the title
+    const desiredTitle = postTitle.replaceAll("-", " ")
+    //find the post with the desired title in the posts array
+
+    for (const postId in posts) {
+        if ((posts[postId].title).toLowerCase() == desiredTitle) {
+            //render the edit post form with all the values inside
+            let editTitle = posts[postId].title;
+            let editContent = posts[postId].content;
+            res.render('editPost.ejs', {title: editTitle, content: editContent})
+        }
+    }
+})
+
+//what we see when we submit our edits
+//when we hit submit, it posts to "posts/update/:title" and renders the homepage
+app.post("/posts/:title", (req, res) => {
+    const postTitle = req.params.title;
+    const desiredTitle = postTitle.replaceAll("-", " ")
+
+    const updatedTitle = req.body.postTitle;
+    const updatedContent = req.body.postContent;
+
+    //get the post with the desired title
+    for (const postId in posts) {
+        if ((posts[postId].title).toLowerCase() == desiredTitle) {
+            posts[postId].title = updatedTitle;
+            posts[postId].content = updatedContent;
+
+            res.redirect("/")
+            return;
+        }
+    }
+
+    res.redirect("/")
+})
+
 //what we see when we click on create 
 //route may be "/create-new"
 //creating it takes us to the home page

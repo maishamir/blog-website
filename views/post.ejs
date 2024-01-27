@@ -1,9 +1,8 @@
 <%- include("./partials/header.ejs") %>
-const linkHelper = require("./")
 
 <h1><%=title%></h1>
 <p><%=content%></p>
 
-<a href="/posts/<%=%>">Edit</a>
-
+<% const urlTitle = (title.replaceAll(" ", "-").toLowerCase() )%>
+<a href="/posts/<%=urlTitle%>/edit">Edit post</a>
 <%- include("./partials/footer.ejs") %>
