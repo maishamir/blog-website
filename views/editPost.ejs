@@ -1,6 +1,6 @@
 <%- include("./partials/header.ejs") %>
 
-<% const urlTitle = title.toLowerCase().replace(" ", "-").toLowerCase() %>
+<% const urlTitle = encodeURIComponent(title.toLowerCase().replace(/ /g, "-"))%>
 
 <form action="/posts/<%=urlTitle%>" method="POST">
     <input type="text" name="postTitle" id="postTitle" value="<%=title%>">

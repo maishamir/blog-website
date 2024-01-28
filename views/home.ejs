@@ -14,7 +14,7 @@
             <p><%= blogPosts[postId].content.substr(0,100) + "..." %></p>
 
             <!-- adding buttons to "see more" and to delete each post if needed -->
-            <a href="/posts/<%= blogPosts[postId].title%>">Read more</a>
+            <a href="/posts/<%= encodeURIComponent(blogPosts[postId].title)%>">Read more</a>
             <button>Delete</button>
         </li>
     <%}%>

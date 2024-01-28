@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { v4 as uuidv4 } from "uuid";
+import { decode } from "querystring";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const app = express();
@@ -42,20 +43,23 @@ app.get("/posts/:title/edit", (req, res) => {
 //when we hit submit, it posts to "posts/update/:title" and renders the homepage
 app.post("/posts/:title", (req, res) => {
     const postTitle = req.params.title;
-    const desiredTitle = postTitle.replaceAll("-", " ")
+    let desiredTitle = decodeURIComponent(postTitle)
+
+    desiredTitle = desiredTitle.replaceAll("-", " ");
 
     const updatedTitle = req.body.postTitle;
     const updatedContent = req.body.postContent;
 
     //get the post with the desired title
     for (const postId in posts) {
-        if ((posts[postId].title).toLowerCase() == desiredTitle) {
+        if ((posts[postId].title).toLowerCase() == desiredTitle.toLowerCase()) {
             posts[postId].title = updatedTitle;
             posts[postId].content = updatedContent;
 
             res.redirect("/")
             return;
         }
+        
     }
 
     res.redirect("/")
@@ -82,23 +86,26 @@ app.post("/", (req, res) => {
 
     posts[postID] = { title: postTitle, content: postContent }
     res.render("home.ejs", { blogPosts: posts });
-    // console.log(posts)
+
 
 
 })
 
 app.get('/posts/:title', (req, res) => {
-    var postTitle = req.params.title;
-    console.log(postTitle);
+    const postTitle = req.params.title;
 
-    postTitle = (postTitle.replaceAll('-', " "));
-    console.log(postTitle)
+    // postTitle = (postTitle.replaceAll('-', " "));
+    const decodedTitle = decodeURIComponent(postTitle);
 
-    for (const postID in posts) {
-        if ((posts[postID].title).toLowerCase() == postTitle.toLowerCase()) {
-            res.render("post.ejs", { title: posts[postID].title, content: posts[postID].content })
+    for (const postId in posts) {
+        if ((posts[postId].title).toLowerCase() === decodedTitle.toLowerCase()) {
+            res.render("post.ejs", { title: posts[postId].title, content: posts[postId].content })
+            return;
         }
     }
+
+    //if post is not found
+    res.redirect("/");
 })
 
 //todo: handle post deletion functionality

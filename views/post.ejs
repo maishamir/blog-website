@@ -3,6 +3,6 @@
 <h1><%=title%></h1>
 <p><%=content%></p>
 
-<% const urlTitle = (title.replaceAll(" ", "-").toLowerCase() )%>
+<% const urlTitle = encodeURIComponent(title.replace(/ /g, "-").toLowerCase())%>
 <a href="/posts/<%=urlTitle%>/edit">Edit post</a>
 <%- include("./partials/footer.ejs") %>
