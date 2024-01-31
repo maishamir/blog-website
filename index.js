@@ -13,7 +13,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method')); 
 const port = 3000;
 
-var posts = {}
+var posts = {
+    '01': { title: 'Sample Blog Title', content: "Interloper overhaul scuttle provost coffer lateen sail black spot snow skysail Buccaneer. Jib weigh anchor Davy Jones' Locker smartly run a rig chase guns yard long clothes Spanish Main Sail ho. Lass ho ye gangway chandler hulk execution dock Plate Fleet Brethren of the Coast doubloon." }
+}
 
 //what we will see when we are at the home page
 //todo: create the homepage with a creation button and a place to show all the articles
@@ -88,6 +90,7 @@ app.post("/", (req, res) => {
 
     posts[postID] = { title: postTitle, content: postContent }
     res.render("home.ejs", { blogPosts: posts });
+    console.log(posts)
 
 
 
