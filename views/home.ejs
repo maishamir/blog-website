@@ -7,20 +7,22 @@
 
 <!-- if blog posts exist, then display them -->
 <% if (locals.blogPosts && Object.keys(locals.blogPosts).length > 0) {%>
-    <ul>
-    <% for (var postId in blogPosts) {%>
-        <li>
-            <h4><%= blogPosts[postId].title %></h4>
-            <p><%= blogPosts[postId].content.substr(0,100) + "..." %></p>
+<ul>
+  <% for (var postId in blogPosts) {%>
+  <li>
+    <form action="/delete" method="post">
+      <input type="hidden" name="title" value="<%= blogPosts[postId].title %>" readonly>  
+      <h4><%= blogPosts[postId].title %></h4>
+      <p><%= blogPosts[postId].content.substr(0,100) + "..." %></p>
 
-            <!-- adding buttons to "see more" and to delete each post if needed -->
-            <a href="/posts/<%= encodeURIComponent(blogPosts[postId].title)%>">Read more</a>
-            <button>Delete</button>
-        </li>
-    <%}%>
-    </ul>
+      <!-- adding buttons to "see more" and to delete each post if needed -->
+      <a href="/posts/<%= encodeURIComponent(blogPosts[postId].title)%>">Read more</a>
+      <button type="submit">Delete</button>
+    </form>
+  </li>
+  <%}%>
+</ul>
 <% } %> <%- include("./partials/footer.ejs") %>
-
 
 <!-- structure of posts -->
 <!-- styled properly of course -->

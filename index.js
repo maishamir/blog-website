@@ -4,11 +4,13 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { v4 as uuidv4 } from "uuid";
 import { decode } from "querystring";
+import methodOverride from "method-override";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const app = express();
 
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method')); 
 const port = 3000;
 
 var posts = {}
@@ -109,6 +111,25 @@ app.get('/posts/:title', (req, res) => {
 })
 
 //todo: handle post deletion functionality
+app.post("/delete", (req, res) => {
+    
+    let postFound = false;
+
+    const titleToDelete = req.body.title;
+
+    for (const postId in posts) {
+        if (posts[postId].title === titleToDelete) {
+            delete posts[postId];
+            postFound = true;
+            res.redirect("/");
+            return;
+        }
+    }
+
+    if (!postFound) {
+        res.status(404).send("Post not found")
+    }
+})
 
 //since we might truncate long post texts to a certain number of characters, 
 //this might be the whole post shown in a new tab
