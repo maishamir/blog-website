@@ -11,12 +11,22 @@
   <% for (var postId in blogPosts) {%>
   <li>
     <form action="/delete" method="post">
-      <input type="hidden" name="title" value="<%= blogPosts[postId].title %>" readonly>  
+      <input
+        type="hidden"
+        name="title"
+        value="<%= blogPosts[postId].title %>"
+        readonly
+      />
       <h4><%= blogPosts[postId].title %></h4>
       <p><%= blogPosts[postId].content.substr(0,100) + "..." %></p>
 
       <!-- adding buttons to "see more" and to delete each post if needed -->
-      <a href="/posts/<%= encodeURIComponent(blogPosts[postId].title)%>">Read more</a>
+      <a href="/posts/<%= encodeURIComponent(blogPosts[postId].title)%>"
+        >Read more</a
+      >
+      <% const urlTitle = encodeURIComponent((blogPosts[postId].title).replace(/ /g,
+      "-").toLowerCase())%>
+      <a href="/posts/<%=urlTitle%>/edit">Edit post</a>
       <button type="submit">Delete</button>
     </form>
   </li>
