@@ -2,10 +2,41 @@
 
 <% const urlTitle = encodeURIComponent(title.toLowerCase().replace(/ /g, "-"))%>
 
-<form action="/posts/<%=urlTitle%>" method="POST">
+<div class="container mt-5">
+  <form action="/posts/<%=urlTitle%>" method="post">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="postTitle" name="postTitle" value="<%=title%>" />
+            <label for="postTitle">Post title</label>
+            </div>
+            <div class="form-floating mb-3">
+            <textarea
+                class="form-control"
+                id="postContent"
+                style="height: 200px"
+                name="postContent"
+            >
+            <%=content%></textarea>
+            <label for="postContent">Content</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="container px-0">
+      <div class="row justify-content-center">
+        <div class="col-3 text-center">
+          <button type="submit" class="btn btn-dark col-6">Save edits</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- <form action="/posts/<%=urlTitle%>" method="POST">
     <input type="text" name="postTitle" id="postTitle" value="<%=title%>">
     <textarea name="postContent" id="postContent" cols="30" rows="10"><%=content%></textarea>
     <button type="submit">Save edits</button>
-</form>
+</form> -->
 
 <%- include("./partials/footer.ejs") %>

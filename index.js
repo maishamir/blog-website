@@ -9,6 +9,7 @@ import methodOverride from "method-override";
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const app = express();
 
+app.use(express.static("public"))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method')); 
 const port = 3000;
@@ -26,7 +27,6 @@ app.get("/", (req, res) => {
 //what we see when we click on the edit button
 //route may be "{name of the post}/edit"
 //it might show the form with the current fields
-
 app.get("/posts/:title/edit", (req, res) => {
     const postTitle = req.params.title;
     //returns the kebab-casing version of the title
@@ -63,7 +63,6 @@ app.post("/posts/:title", (req, res) => {
             res.redirect("/")
             return;
         }
-        
     }
 
     res.redirect("/")
@@ -87,19 +86,14 @@ app.post("/", (req, res) => {
     let postID = uuidv4();
 
     //store it in an object and display it on the homepage
-
     posts[postID] = { title: postTitle, content: postContent }
-    res.render("home.ejs", { blogPosts: posts });
-    console.log(posts)
 
-
-
+    //make a new request to the home route; makes sure that the previous form data is not being re-submitted
+    res.redirect("/")
 })
 
 app.get('/posts/:title', (req, res) => {
     const postTitle = req.params.title;
-
-    // postTitle = (postTitle.replaceAll('-', " "));
     const decodedTitle = decodeURIComponent(postTitle);
 
     for (const postId in posts) {
@@ -117,7 +111,6 @@ app.get('/posts/:title', (req, res) => {
 app.post("/delete", (req, res) => {
     
     let postFound = false;
-
     const titleToDelete = req.body.title;
 
     for (const postId in posts) {
@@ -137,7 +130,6 @@ app.post("/delete", (req, res) => {
 //since we might truncate long post texts to a certain number of characters, 
 //this might be the whole post shown in a new tab
 //route may be "/{post title}"
-//GET REQUEST
 
 app.listen(port, (req, res) => { 
     console.log(`Listening on port ${port}:`)

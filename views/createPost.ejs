@@ -1,9 +1,41 @@
 <%- include("./partials/header.ejs") %>
 
-<form action="/" method="POST">
-    <input type="text" name="postTitle" id="postTitle" placeholder="Post Title">
-    <textarea name="postContent" id="postContent" cols="30" rows="10" placeholder="Post content"></textarea>
-    <button type="submit">Create Post</button>
-</form>
+<div class="container mt-5">
+  <form action="/" method="post">
+    <div class="row justify-content-center">
+      <div class="col-6">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="postTitle" name="postTitle" />
+          <label for="postTitle">Post title</label>
+        </div>
+        <div class="form-floating mb-3">
+          <textarea
+            class="form-control"
+            id="postContent"
+            style="height: 200px"
+            name="postContent"
+          ></textarea>
+          <label for="postContent">Content</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="container px-0">
+      <div class="row justify-content-center">
+        <div class="col-6 text-center">
+          <button type="submit" class="btn btn-dark col-6">Create post</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
 
 <%- include("./partials/footer.ejs") %>
+
+<!-- <div class="form-container">
+    <form action="/" method="POST" class="createPost">
+        <input type="text" name="postTitle" id="postTitle" placeholder="Post Title"> <br>
+        <textarea name="postContent" id="postContent" cols="30" rows="10" placeholder="Post content"></textarea> <br>
+        <button type="submit">Create Post</button>
+    </form>
+</div> -->
